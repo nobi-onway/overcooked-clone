@@ -8,6 +8,12 @@ public class InteractWithCounter : MonoBehaviour
     [SerializeField] private LayerMask _counterLayerMask;
 
     private IInteractableCounter _selectedCounter;
+    private IKitchenObjectContainer _kitchenObjectContainer;
+
+    private void Start()
+    {
+        _kitchenObjectContainer = GetComponentInChildren<IKitchenObjectContainer>();
+    }
 
     private void Update()
     {
@@ -33,6 +39,8 @@ public class InteractWithCounter : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interact");
+        if (_selectedCounter == null) return;
+
+        _selectedCounter.Interact(_kitchenObjectContainer);
     }
 }
