@@ -148,6 +148,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6903025722389530279}
+  - {fileID: 4309738649752909550}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &680969171606383092
@@ -163,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedVisual: {fileID: 4782467968185183323}
+  _kitchenObjectSettings: {fileID: 11400000, guid: 13da6728866015a4ab13d5c84d9e7530, type: 2}
 --- !u!65 &7968883377883029060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,6 +186,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.2, z: 1.5}
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!1 &5655825503227726130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4309738649752909550}
+  - component: {fileID: 1674211136093222639}
+  m_Layer: 3
+  m_Name: KitchenObjectContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4309738649752909550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655825503227726130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4802162922870592536}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1674211136093222639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655825503227726130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7abe27d9c32d18040afe75bb2bb22b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5694142480968801407
 GameObject:
   m_ObjectHideFlags: 0
