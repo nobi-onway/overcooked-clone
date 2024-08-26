@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InteractWithCounter : MonoBehaviour
+{
+    [SerializeField] private float _distance;
+    [SerializeField] private LayerMask _counterLayerMask;
+
+    private IInteractableCounter _selectedCounter;
+
+    private void Update()
+    {
+        HandleInteract();
+    }
+
+    private void HandleInteract()
+    {
+        bool hasAnyCounter = Physics.Raycast(this.transform.position, this.transform.forward, out RaycastHit hitInfo ,_distance, _counterLayerMask);
+        if (!hasAnyCounter) { SetSelectedCounter(null); return; }
+
+        bool isInteractableCounter = hitInfo.transform.TryGetComponent(out IInteractableCounter interactableCounter);
+        if (!isInteractableCounter) { SetSelectedCounter(null); return; }
+
+        SetSelectedCounter(interactableCounter);
+    }
+
+    private void SetSelectedCounter(IInteractableCounter counter)
+    {
+        _selectedCounter?.DeSelected();
+        _selectedCounter = counter?.Selected();
+    }
+
+    public void Interact()
+    {
+        Debug.Log("Interact");
+    }
+}

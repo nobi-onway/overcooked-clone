@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour, IController<EPlayerState>
     [SerializeField] private float _rotateSpeed;
     #endregion
 
+    #region Behaviour
+    private InteractWithCounter _interactWithCounter;
+    #endregion
+
     private EPlayerState _state;
     public EPlayerState State 
     { 
@@ -32,6 +36,9 @@ public class PlayerController : MonoBehaviour, IController<EPlayerState>
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _interactWithCounter = GetComponent<InteractWithCounter>();
+
+        _inputController.OnInteract += _interactWithCounter.Interact;
     }
 
     private void FixedUpdate()
