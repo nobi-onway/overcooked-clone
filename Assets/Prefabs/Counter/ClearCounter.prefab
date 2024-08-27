@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6d93c4eb21a134196d160b6081b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedVisual: {fileID: 4782467968185183323}
-  _kitchenObjectSettings: {fileID: 11400000, guid: 13da6728866015a4ab13d5c84d9e7530, type: 2}
+  _selectedVisuals:
+  - {fileID: 7193124790641762897}
 --- !u!65 &7968883377883029060
 BoxCollider:
   m_ObjectHideFlags: 0

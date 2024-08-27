@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerCounterController : MonoBehaviour, IInteractableCounter
+public class ContainerCounterController : BaseCounterController
 {
     private const string OPEN_CLOSE = "OpenClose";
 
@@ -17,21 +17,15 @@ public class ContainerCounterController : MonoBehaviour, IInteractableCounter
         _objectSprite.sprite = _kitchenObjectSettings.sprite;
     }
 
-    public void Interact(IKitchenObjectContainer kitchenObjectContainer)
+    public override void Interact(IKitchenObjectContainer kitchenObjectContainer)
     {
+        if (!kitchenObjectContainer.IsEmpty()) return;
+
         _animator.SetTrigger(OPEN_CLOSE);
 
-        KitchenObjectController kitchenObjectClone = Instantiate(_kitchenObjectSettings.prefab).GetComponent<KitchenObjectController>();
+        KitchenObjectController kitchenObjectClone = new GameObject(_kitchenObjectSettings.objectName).AddComponent<KitchenObjectController>();
+        kitchenObjectClone.Init(_kitchenObjectSettings);
+        
         kitchenObjectContainer.SetKitchenObject(kitchenObjectClone);
-    }
-
-    public IInteractableCounter Selected()
-    {
-        return this;
-    }
-
-    public void DeSelected()
-    {
-
     }
 }
