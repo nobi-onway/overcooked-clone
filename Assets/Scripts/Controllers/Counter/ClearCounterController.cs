@@ -1,6 +1,6 @@
 public class ClearCounterController : BaseCounterController
 {
-    private IKitchenObjectContainer _kitchenObjectContainer;
+    protected IKitchenObjectContainer _kitchenObjectContainer;
 
     private void Start()
     {
@@ -9,6 +9,8 @@ public class ClearCounterController : BaseCounterController
 
     public override void Interact(IKitchenObjectContainer kitchenObjectContainer)
     {
+        if (!CanInteractWith(kitchenObjectContainer.GetKitchenObject())) return;
+
         if (_kitchenObjectContainer.IsEmpty() && !kitchenObjectContainer.IsEmpty())
         {
             ShiftKitchenObject(kitchenObjectContainer, _kitchenObjectContainer);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KitchenObjectContrainerController : MonoBehaviour, IKitchenObjectContainer
+public class KitchenObjectContainerController : MonoBehaviour, IKitchenObjectContainer
 {
     private KitchenObjectController _kitchenObject;
 

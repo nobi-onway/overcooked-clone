@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class KitchenObjectController : MonoBehaviour
 {
-    private KitchenObjectSettings _settings;
+    public Transform currentVisual;
 
-    public void Init(KitchenObjectSettings kitchenObjectSettings)
+    public void Init()
     {
-        _settings = kitchenObjectSettings;
-
-        Transform visualPrefab = Instantiate(_settings.visualPrefab, this.transform);
-        visualPrefab.position = Vector3.zero;
+        currentVisual.gameObject.SetActive(true);
     }
 
     public void SetParent(Transform transform)

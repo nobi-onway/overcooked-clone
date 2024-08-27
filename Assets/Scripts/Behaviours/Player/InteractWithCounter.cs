@@ -43,4 +43,11 @@ public class InteractWithCounter : MonoBehaviour
 
         _selectedCounter.Interact(_kitchenObjectContainer);
     }
+
+    public void AlternateInteract()
+    {
+        if (_selectedCounter == null) return;
+
+        _selectedCounter.AlternateInteract(_kitchenObjectContainer);
+    }
 }

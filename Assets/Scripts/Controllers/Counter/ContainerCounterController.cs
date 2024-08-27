@@ -23,9 +23,7 @@ public class ContainerCounterController : BaseCounterController
 
         _animator.SetTrigger(OPEN_CLOSE);
 
-        KitchenObjectController kitchenObjectClone = new GameObject(_kitchenObjectSettings.objectName).AddComponent<KitchenObjectController>();
-        kitchenObjectClone.Init(_kitchenObjectSettings);
-        
+        KitchenObjectController kitchenObjectClone = Instantiate(_kitchenObjectSettings.prefab).GetComponent<KitchenObjectController>();
         kitchenObjectContainer.SetKitchenObject(kitchenObjectClone);
     }
 }
