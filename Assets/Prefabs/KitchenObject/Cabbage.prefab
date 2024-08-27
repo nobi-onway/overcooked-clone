@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2c99365fb1b94429a0c75061fb58a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentVisual: {fileID: 8842117532411290762}
 --- !u!114 &-1432844313568869872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02d9f498a0c76247b9a25df3f5a5d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sliceVisual: {fileID: 7905257614750094654}
+  _slicedVisual: {fileID: 7905257614750094654}
+  _unslicedVisual: {fileID: 8842117532411290762}
+  _maxSliceTime: 5
 --- !u!1 &7905257614750094655
 GameObject:
   m_ObjectHideFlags: 0

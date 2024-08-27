@@ -1,10 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CuttingCounterController : ClearCounterController
 {
-    private SliceObject _sliceObject;
+    #region UnityEditor
+    [SerializeField] private ProgressBarController _progressBar;
+    #endregion
+
+    private const string CUT = "Cut";
+    
+    private ISlicableKitchenObject _sliceObject;
+    private Animator _animator;
+
+    protected override void Start()
+    {
+        base.Start();
+        _animator = GetComponentInChildren<Animator>();
+
+        _progressBar.ShowIf(false);
+
+        _kitchenObjectContainer.OnSetKitchenObject += (kitchenObject) =>
+        {
+            _progressBar.ShowIf(kitchenObject != null);
+
+            if (kitchenObject == null) return;
+            if (_sliceObject == null && !kitchenObject.TryGetComponent(out _sliceObject)) return;
+
+            _progressBar.SetProgressValue(_sliceObject.GetSliceProgress());
+        };
+    }
 
     protected override bool CanInteractWith(KitchenObjectController kitchenObject)
     {
@@ -16,7 +39,10 @@ public class CuttingCounterController : ClearCounterController
     public override void AlternateInteract(IKitchenObjectContainer kitchenObjectContainer)
     {
         if (_sliceObject == null) return;
+        if (_sliceObject.IsSliced) return;
 
-        _sliceObject.Slice(_kitchenObjectContainer.GetKitchenObject());
+        _animator.SetTrigger(CUT);
+        _sliceObject.Slice();
+        _progressBar.SetProgressValue(_sliceObject.GetSliceProgress());
     }
 }

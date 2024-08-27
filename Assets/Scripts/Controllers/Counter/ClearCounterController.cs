@@ -1,8 +1,7 @@
 public class ClearCounterController : BaseCounterController
 {
     protected IKitchenObjectContainer _kitchenObjectContainer;
-
-    private void Start()
+    protected virtual void Start()
     {
         _kitchenObjectContainer = GetComponentInChildren<IKitchenObjectContainer>();
     }

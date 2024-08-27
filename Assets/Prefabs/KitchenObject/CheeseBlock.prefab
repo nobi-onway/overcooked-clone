@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2c99365fb1b94429a0c75061fb58a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentVisual: {fileID: 3800634966697698036}
 --- !u!114 &4484499095179653913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02d9f498a0c76247b9a25df3f5a5d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sliceVisual: {fileID: 39049315668595567}
+  _slicedVisual: {fileID: 39049315668595567}
+  _unslicedVisual: {fileID: 3800634966697698036}
+  _maxSliceTime: 3
 --- !u!1001 &781878751006389663
 PrefabInstance:
   m_ObjectHideFlags: 0

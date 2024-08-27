@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class KitchenObjectController : MonoBehaviour
 {
-    public Transform currentVisual;
-
-    public void Init()
-    {
-        currentVisual.gameObject.SetActive(true);
-    }
-
     public void SetParent(Transform transform)
     {
         this.transform.parent = transform;
