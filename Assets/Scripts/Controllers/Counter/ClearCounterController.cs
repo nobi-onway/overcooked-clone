@@ -1,14 +1,15 @@
 public class ClearCounterController : BaseCounterController
 {
-    private IKitchenObjectContainer _kitchenObjectContainer;
-
-    private void Start()
+    protected IKitchenObjectContainer _kitchenObjectContainer;
+    protected virtual void Start()
     {
         _kitchenObjectContainer = GetComponentInChildren<IKitchenObjectContainer>();
     }
 
     public override void Interact(IKitchenObjectContainer kitchenObjectContainer)
     {
+        if (!CanInteractWith(kitchenObjectContainer.GetKitchenObject())) return;
+
         if (_kitchenObjectContainer.IsEmpty() && !kitchenObjectContainer.IsEmpty())
         {
             ShiftKitchenObject(kitchenObjectContainer, _kitchenObjectContainer);

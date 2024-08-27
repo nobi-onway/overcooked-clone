@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KitchenObjectContrainerController : MonoBehaviour, IKitchenObjectContainer
+public class KitchenObjectContainerController : MonoBehaviour, IKitchenObjectContainer
 {
     private KitchenObjectController _kitchenObject;
+
+    public event Action<KitchenObjectController> OnSetKitchenObject;
 
     public void ClearKitchenObject()
     {
         _kitchenObject = null;
+        OnSetKitchenObject?.Invoke(null);
     }
 
     public KitchenObjectController GetKitchenObject()
@@ -22,5 +26,7 @@ public class KitchenObjectContrainerController : MonoBehaviour, IKitchenObjectCo
     {
         _kitchenObject = kitchenObject;
         _kitchenObject.SetParent(this.transform);
+
+        OnSetKitchenObject?.Invoke(kitchenObject);
     }
 }

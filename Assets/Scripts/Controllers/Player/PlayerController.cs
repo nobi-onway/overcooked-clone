@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour, IController<EPlayerState>
         _interactWithCounter = GetComponent<InteractWithCounter>();
 
         _inputController.OnInteract += _interactWithCounter.Interact;
+        _inputController.OnAlternateInteract += _interactWithCounter.AlternateInteract;
     }
 
     private void FixedUpdate()
