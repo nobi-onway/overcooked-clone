@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4072462852650149592
 RectTransform:
   m_ObjectHideFlags: 0
@@ -447,7 +447,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectedVisuals:
   - {fileID: 2073071269670627892}
-  _progressBar: {fileID: 8423449679634300879}
 --- !u!1 &8099960804504804072
 GameObject:
   m_ObjectHideFlags: 0
