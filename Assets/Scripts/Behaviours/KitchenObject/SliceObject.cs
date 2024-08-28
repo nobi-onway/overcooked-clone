@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-public class SliceObject : MonoBehaviour, ISlicableKitchenObject
+public class SliceObject : MonoBehaviour, ISlicableKitchenObject, IObjectVisual
 {
     [SerializeField] private Transform _slicedVisual;
     [SerializeField] private Transform _unslicedVisual;
@@ -10,12 +9,6 @@ public class SliceObject : MonoBehaviour, ISlicableKitchenObject
     private int _currentSliceTime;
 
     public bool IsSliced { get; private set; }
-
-    private void Start()
-    {
-        SetSliced(false);
-        _currentSliceTime = 0;
-    }
 
     public void Slice()
     {
@@ -32,4 +25,10 @@ public class SliceObject : MonoBehaviour, ISlicableKitchenObject
     }
 
     public float GetSliceProgress() => (float) _currentSliceTime/ _maxSliceTime;
+
+    public void Reset()
+    {
+        SetSliced(false);
+        _currentSliceTime = 0;
+    }
 }
