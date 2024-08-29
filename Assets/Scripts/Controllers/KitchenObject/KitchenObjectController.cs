@@ -3,22 +3,21 @@ using UnityEngine;
 
 public class KitchenObjectController : MonoBehaviour, IObjectPool, IKitchenObject
 {
+    private KitchenObjectSettings _settings;
     public bool IsActivated { get; protected set; }
+    public bool IsProcessed { get; set; }
 
     public event Action OnReturnToPool;
-    private IObjectVisual[] _objectVisualArray;
+    public event Action OnReset;
 
-    private void Start()
+    public void Init(KitchenObjectSettings settings)
     {
-        _objectVisualArray = GetComponents<IObjectVisual>();
-
-        ResetVisual();
+        _settings = settings;
     }
 
     public virtual void ReturnToPool()
     {
-        OnReturnToPool?.Invoke();
-        ResetVisual();
+        InvokeReturnToPoolAction();
         SetActivated(false);
     }
 
@@ -39,17 +38,16 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool, IKitchenObjec
         this.gameObject.SetActive(isActivated);
     }
 
-    protected void InvokeReturnToPoolAction() => OnReturnToPool?.Invoke();
-
-    private void ResetVisual()
+    protected void InvokeReturnToPoolAction()
     {
-        if (_objectVisualArray == null) return;
-
-        foreach (IObjectVisual visual in _objectVisualArray)
-        {
-            visual.Reset();
-        }
+        OnReturnToPool?.Invoke();
+        OnReset?.Invoke();
     }
 
     public Transform GetTransform() => this.transform;
+
+    public KitchenObjectSettings GetData()
+    {
+        return _settings;
+    }
 }

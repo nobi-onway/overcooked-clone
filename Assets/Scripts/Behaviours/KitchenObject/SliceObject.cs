@@ -1,34 +1,47 @@
+using System;
 using UnityEngine;
 
-public class SliceObject : MonoBehaviour, ISlicableKitchenObject, IObjectVisual
+public class SliceObject : MonoBehaviour, ISlicableKitchenObject, IChangableVisual
 {
-    [SerializeField] private Transform _slicedVisual;
-    [SerializeField] private Transform _unslicedVisual;
-
     [SerializeField] private int _maxSliceTime;
     private int _currentSliceTime;
+    private IKitchenObject _kitchenObject;
 
-    public bool IsSliced { get; private set; }
+    public ESliceState SliceState { get; private set; }
+    public event Action<ESliceState> OnSliceStateChange;
+
+    public int VisualIndex { get; private set; }
+    public event Action<int> OnVisualChange;
+    public bool IsSliced => SliceState == ESliceState.SLICED;
+
+    private void Start()
+    {
+        _kitchenObject = GetComponent<IKitchenObject>();
+        _kitchenObject.OnReset += () => SetSliceState(ESliceState.UNSLICED);
+    }
+    private void SetVisual(int visualIndex)
+    {
+        VisualIndex = visualIndex;
+        OnVisualChange?.Invoke(visualIndex);
+    }
+
+    private void SetSliceState(ESliceState sliceState)
+    {
+        _kitchenObject.IsProcessed = sliceState == ESliceState.SLICED;
+        _currentSliceTime = sliceState == ESliceState.UNSLICED ? 0 : _currentSliceTime;
+        SetVisual((int) sliceState);
+
+        SliceState = sliceState;
+        OnSliceStateChange?.Invoke(sliceState);
+    }
 
     public void Slice()
     {
         _currentSliceTime++;
         if (_currentSliceTime > _maxSliceTime) _currentSliceTime = _maxSliceTime;
-        if(_currentSliceTime == _maxSliceTime) SetSliced(true);
-    }
-
-    private void SetSliced(bool isSliced)
-    {
-        IsSliced = isSliced;
-        _slicedVisual.gameObject.SetActive(isSliced);
-        _unslicedVisual.gameObject.SetActive(!isSliced);
+        if (_currentSliceTime == _maxSliceTime) SetSliceState(ESliceState.SLICED);
     }
 
     public float GetSliceProgress() => (float) _currentSliceTime/ _maxSliceTime;
-
-    public void Reset()
-    {
-        SetSliced(false);
-        _currentSliceTime = 0;
-    }
+    
 }

@@ -43,6 +43,8 @@ public class ContainerCounterController : BaseCounterController
         for (int i = 0; i < POOL_SIZE; i++)
         {
             KitchenObjectController kitchenObjectClone = Instantiate(_kitchenObjectSettings.prefab, kitchenObjectHolder.transform).GetComponent<KitchenObjectController>();
+            kitchenObjectClone.Init(_kitchenObjectSettings);
+
             _kitchenObjectPool.AddToPool(kitchenObjectClone);
         }
     }

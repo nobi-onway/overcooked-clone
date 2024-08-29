@@ -1,40 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class StoveObject : MonoBehaviour, IStovableObject, IObjectVisual
+public class StoveObject : MonoBehaviour, IStovableObject, IChangableVisual
 {
-    [SerializeField] private Transform _uncookedVisual;
-    [SerializeField] private Transform _cookedVisual;
-    [SerializeField] private Transform _burnedVisual;
-
     [SerializeField] private float _maxStoveTime;
     private float _currentStoveTime;
-    private Transform _currentVisual;
+    private IKitchenObject _kitchenObject;
 
     private float _cookedTime => _maxStoveTime * 1 / 2;
-    public bool IsStovable => _currentStoveTime < _maxStoveTime;
+    public bool IsStovable => StoveState != EStoveState.BURNED;
+
+    public int VisualIndex { get; private set; }
+    public event Action<int> OnVisualChange;
+
+    public EStoveState StoveState { get; private set; }
+    public event Action<EStoveState> OnStoveStateChange;
+
+    private void Start()
+    {
+        _kitchenObject = GetComponent<IKitchenObject>();
+        _kitchenObject.OnReset += () => SetStoveState(EStoveState.UNCOOKED);
+    }
 
     public float GetStoveProgress() => _currentStoveTime / _maxStoveTime;
-
-    public void Reset()
-    {
-        SetCurrentVisual(_uncookedVisual);
-        _currentStoveTime = 0;
-    }
 
     public void Stove()
     {
         _currentStoveTime += Time.deltaTime;
 
-        if (_currentStoveTime >= _maxStoveTime) { SetCurrentVisual(_burnedVisual); return; }
-        if (_currentStoveTime >= _cookedTime) { SetCurrentVisual(_cookedVisual); return; }
+        if (_currentStoveTime >= _maxStoveTime) { SetStoveState(EStoveState.BURNED); return; }
+        if (_currentStoveTime >= _cookedTime) { SetStoveState(EStoveState.COOKED); return; }
     }
 
-    private void SetCurrentVisual(Transform visual)
+    private void SetVisual(int visualIndex)
     {
-        _currentVisual?.gameObject.SetActive(false);
-        _currentVisual = visual;
-        _currentVisual.gameObject.SetActive(true);
+        VisualIndex = visualIndex;
+        OnVisualChange?.Invoke(visualIndex);
+    }
+
+    private void SetStoveState(EStoveState stoveState)
+    {
+        StoveState = stoveState;
+        OnStoveStateChange?.Invoke(stoveState);
+
+        _currentStoveTime = stoveState == EStoveState.UNCOOKED ? 0 : _currentStoveTime;
+        SetVisual((int)stoveState);
     }
 }
