@@ -22,17 +22,17 @@ public class CuttingCounterController : ClearCounterController, IProgressTracker
             SetProgress(0);
 
             if (kitchenObject == null) return;
-            if (_sliceObject == null && !kitchenObject.TryGetComponent(out _sliceObject)) return;
+            if (_sliceObject == null && !kitchenObject.GetTransform().TryGetComponent(out _sliceObject)) return;
 
             SetProgress(_sliceObject.GetSliceProgress());
         };
     }
 
-    protected override bool CanInteractWith(KitchenObjectController kitchenObject)
+    protected override bool CanInteractWith(IKitchenObject kitchenObject)
     {
         if (kitchenObject == null) return true;
 
-        return kitchenObject.TryGetComponent(out _sliceObject);
+        return kitchenObject.GetTransform().TryGetComponent(out _sliceObject);
     }
 
     public override void AlternateInteract(IKitchenObjectContainer kitchenObjectContainer)

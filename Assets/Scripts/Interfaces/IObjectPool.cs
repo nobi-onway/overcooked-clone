@@ -1,10 +1,11 @@
 using System;
+using UnityEngine;
 
-public interface IObjectPool<T>
+public interface IObjectPool
 {
     public event Action OnReturnToPool;
     public void ReturnToPool();
     public void Reset();
-    public T GetObject();
+    public Transform GetTransform();
     public bool IsActivated { get; }
 }

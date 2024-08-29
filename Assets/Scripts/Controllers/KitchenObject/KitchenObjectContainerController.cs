@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class KitchenObjectContainerController : MonoBehaviour, IKitchenObjectContainer
 {
-    private KitchenObjectController _kitchenObject;
+    private IKitchenObject _kitchenObject;
 
-    public event Action<KitchenObjectController> OnSetKitchenObject;
+    public event Action<IKitchenObject> OnSetKitchenObject;
 
     public void ClearKitchenObject()
     {
@@ -13,14 +13,14 @@ public class KitchenObjectContainerController : MonoBehaviour, IKitchenObjectCon
         OnSetKitchenObject?.Invoke(null);
     }
 
-    public KitchenObjectController GetKitchenObject()
+    public IKitchenObject GetKitchenObject()
     {
         return _kitchenObject;
     }
 
     public bool IsEmpty() => _kitchenObject == null;
 
-    public void SetKitchenObject(KitchenObjectController kitchenObject)
+    public void SetKitchenObject(IKitchenObject kitchenObject)
     {
         _kitchenObject = kitchenObject;
         _kitchenObject.SetParent(this.transform);

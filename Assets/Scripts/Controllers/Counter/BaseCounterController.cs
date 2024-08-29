@@ -5,7 +5,7 @@ public abstract class BaseCounterController : MonoBehaviour, IInteractableCounte
     #region UnityEditor
     [SerializeField] private Transform[] _selectedVisuals;
     #endregion
-    protected virtual bool CanInteractWith(KitchenObjectController kitchenObject) => true;
+    protected virtual bool CanInteractWith(IKitchenObject kitchenObject) => true;
 
     public void DeSelected() => EnableSelectedVisualIf(false);
 

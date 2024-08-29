@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectController>
+public class KitchenObjectController : MonoBehaviour, IObjectPool, IKitchenObject
 {
-    public bool IsActivated { get; private set; }
+    public bool IsActivated { get; protected set; }
 
     public event Action OnReturnToPool;
     private IObjectVisual[] _objectVisualArray;
@@ -15,14 +15,14 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectC
         ResetVisual();
     }
 
-    public void ReturnToPool()
+    public virtual void ReturnToPool()
     {
         OnReturnToPool?.Invoke();
         ResetVisual();
         SetActivated(false);
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         SetActivated(true);
     }
@@ -33,13 +33,13 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectC
         this.transform.localPosition = Vector3.zero;
     }
 
-    public KitchenObjectController GetObject() => this;
-
-    private void SetActivated(bool isActivated)
+    protected virtual void SetActivated(bool isActivated)
     {
         IsActivated = isActivated;
         this.gameObject.SetActive(isActivated);
     }
+
+    protected void InvokeReturnToPoolAction() => OnReturnToPool?.Invoke();
 
     private void ResetVisual()
     {
@@ -50,4 +50,6 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectC
             visual.Reset();
         }
     }
+
+    public Transform GetTransform() => this.transform;
 }

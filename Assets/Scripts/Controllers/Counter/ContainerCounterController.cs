@@ -25,11 +25,11 @@ public class ContainerCounterController : BaseCounterController
 
         _animator.SetTrigger(OPEN_CLOSE);
 
-        IObjectPool<KitchenObjectController> kitchenObjectClone = _kitchenObjectPool.GetObjectPool();
+        IObjectPool kitchenObjectClone = _kitchenObjectPool.GetObjectPool((obj) => !obj.IsActivated);
 
         if (kitchenObjectClone == null) return;
 
-        kitchenObjectContainer.SetKitchenObject(kitchenObjectClone.GetObject());
+        kitchenObjectContainer.SetKitchenObject(kitchenObjectClone.GetTransform().GetComponent<KitchenObjectController>());
     }
 
     private void InitPool()

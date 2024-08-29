@@ -45,7 +45,7 @@ public class StoveCounterController : ClearCounterController, IProgressTracker
         _kitchenObjectContainer.OnSetKitchenObject += (kitchenObject) =>
         {
             if (kitchenObject == null) { SetState(EStoveCounterState.IDLE); return; }
-            if (_stovableObject == null && !kitchenObject.TryGetComponent(out _stovableObject)) { SetState(EStoveCounterState.IDLE); return; }
+            if (_stovableObject == null && !kitchenObject.GetTransform().TryGetComponent(out _stovableObject)) { SetState(EStoveCounterState.IDLE); return; }
 
             _stoveCoroutine = Stove(_stovableObject);
             SetState(EStoveCounterState.STOVING);
@@ -54,11 +54,11 @@ public class StoveCounterController : ClearCounterController, IProgressTracker
         SetState(EStoveCounterState.IDLE);
     }
 
-    protected override bool CanInteractWith(KitchenObjectController kitchenObject)
+    protected override bool CanInteractWith(IKitchenObject kitchenObject)
     {
         if (kitchenObject == null) return true;
 
-        return kitchenObject.TryGetComponent(out _stovableObject);
+        return kitchenObject.GetTransform().TryGetComponent(out _stovableObject);
     }
 
     private IEnumerator Stove(IStovableObject kitchenObject)
