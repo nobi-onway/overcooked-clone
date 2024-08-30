@@ -7,4 +7,5 @@ public interface IKitchenObjectContainer
     public void ClearKitchenObject();
     public IKitchenObject GetKitchenObject();
     public event Action<IKitchenObject> OnSetKitchenObject;
+    public bool CanContain(IKitchenObject kitchenObject);
 }

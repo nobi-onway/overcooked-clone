@@ -7,6 +7,16 @@ public class KitchenObjectContainerController : MonoBehaviour, IKitchenObjectCon
 
     public event Action<IKitchenObject> OnSetKitchenObject;
 
+    public bool CanContain(IKitchenObject kitchenObject)
+    {
+        if (IsEmpty() || kitchenObject == null) return false;
+
+        IContainableObject containableObject = _kitchenObject.GetTransform().GetComponent<IContainableObject>();
+        if (containableObject == null) return false;
+
+        return containableObject.TryContainObject(kitchenObject);
+    }
+
     public void ClearKitchenObject()
     {
         _kitchenObject = null;

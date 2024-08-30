@@ -20,6 +20,8 @@ public class StoveObject : MonoBehaviour, IStovableObject, IChangableVisual
     {
         _kitchenObject = GetComponent<IKitchenObject>();
         _kitchenObject.OnReset += () => SetStoveState(EStoveState.UNCOOKED);
+
+        SetStoveState(EStoveState.UNCOOKED);
     }
 
     public float GetStoveProgress() => _currentStoveTime / _maxStoveTime;
@@ -43,6 +45,7 @@ public class StoveObject : MonoBehaviour, IStovableObject, IChangableVisual
         StoveState = stoveState;
         OnStoveStateChange?.Invoke(stoveState);
 
+        _kitchenObject.IsProcessed = stoveState == EStoveState.COOKED;
         _currentStoveTime = stoveState == EStoveState.UNCOOKED ? 0 : _currentStoveTime;
         SetVisual((int)stoveState);
     }

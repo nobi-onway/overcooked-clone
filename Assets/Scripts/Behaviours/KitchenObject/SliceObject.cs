@@ -18,6 +18,8 @@ public class SliceObject : MonoBehaviour, ISlicableKitchenObject, IChangableVisu
     {
         _kitchenObject = GetComponent<IKitchenObject>();
         _kitchenObject.OnReset += () => SetSliceState(ESliceState.UNSLICED);
+
+        SetSliceState(ESliceState.UNSLICED);
     }
     private void SetVisual(int visualIndex)
     {

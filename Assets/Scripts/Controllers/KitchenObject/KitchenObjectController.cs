@@ -13,6 +13,7 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool, IKitchenObjec
     public void Init(KitchenObjectSettings settings)
     {
         _settings = settings;
+        IsProcessed = true;
     }
 
     public virtual void ReturnToPool()
