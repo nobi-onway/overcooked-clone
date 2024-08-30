@@ -7,15 +7,31 @@ public class ProgressBarController : MonoBehaviour
     [SerializeField] private Image _progress;
     #endregion
 
-    public float ProgressValue { get; private set; }
+    private IProgressTracker _progressTracker;
 
-    public void SetProgressValue(float value)
+    private void Start()
     {
-        ProgressValue = value;
-        _progress.fillAmount = value;
+        SetProgressValue(0);
+
+        _progressTracker = GetComponentInParent<IProgressTracker>();
+
+        SetUpEvent(_progressTracker);
     }
 
-    public void ShowIf(bool canShow)
+    private void SetUpEvent(IProgressTracker progressTracker)
+    {
+        if (progressTracker == null) return;
+
+        progressTracker.OnProgressChange += SetProgressValue;
+    }
+
+    private void SetProgressValue(float value)
+    {
+        _progress.fillAmount = value;
+        ShowIf(value > 0);
+    }
+
+    private void ShowIf(bool canShow)
     {
         this.transform.gameObject.SetActive(canShow);
     }

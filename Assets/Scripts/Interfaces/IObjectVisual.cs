@@ -1,4 +1,4 @@
 public interface IObjectVisual
 {
-    public void Reset();
+    public void ResetVisual();
 }

@@ -1,28 +1,28 @@
 using System;
 using UnityEngine;
 
-public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectController>
+public class KitchenObjectController : MonoBehaviour, IObjectPool, IKitchenObject
 {
-    public bool IsActivated { get; private set; }
+    private KitchenObjectSettings _settings;
+    public bool IsActivated { get; protected set; }
+    public bool IsProcessed { get; set; }
 
     public event Action OnReturnToPool;
-    private IObjectVisual[] _objectVisualArray;
+    public event Action OnReset;
 
-    private void Start()
+    public void Init(KitchenObjectSettings settings)
     {
-        _objectVisualArray = GetComponents<IObjectVisual>();
-
-        ResetVisual();
+        _settings = settings;
+        IsProcessed = true;
     }
 
-    public void ReturnToPool()
+    public virtual void ReturnToPool()
     {
-        OnReturnToPool?.Invoke();
-        ResetVisual();
+        InvokeReturnToPoolAction();
         SetActivated(false);
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         SetActivated(true);
     }
@@ -33,21 +33,22 @@ public class KitchenObjectController : MonoBehaviour, IObjectPool<KitchenObjectC
         this.transform.localPosition = Vector3.zero;
     }
 
-    public KitchenObjectController GetObject() => this;
-
-    private void SetActivated(bool isActivated)
+    protected virtual void SetActivated(bool isActivated)
     {
         IsActivated = isActivated;
         this.gameObject.SetActive(isActivated);
     }
 
-    private void ResetVisual()
+    protected void InvokeReturnToPoolAction()
     {
-        if (_objectVisualArray == null) return;
+        OnReturnToPool?.Invoke();
+        OnReset?.Invoke();
+    }
 
-        foreach (IObjectVisual visual in _objectVisualArray)
-        {
-            visual.Reset();
-        }
+    public Transform GetTransform() => this.transform;
+
+    public KitchenObjectSettings GetData()
+    {
+        return _settings;
     }
 }

@@ -2,9 +2,10 @@ using System;
 
 public interface IKitchenObjectContainer
 {
-    public void SetKitchenObject(KitchenObjectController kitchenObject);
+    public void SetKitchenObject(IKitchenObject kitchenObject);
     public bool IsEmpty();
     public void ClearKitchenObject();
-    public KitchenObjectController GetKitchenObject();
-    public event Action<KitchenObjectController> OnSetKitchenObject;
+    public IKitchenObject GetKitchenObject();
+    public event Action<IKitchenObject> OnSetKitchenObject;
+    public bool CanContain(IKitchenObject kitchenObject);
 }

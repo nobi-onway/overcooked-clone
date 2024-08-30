@@ -21,11 +21,29 @@ public class ClearCounterController : BaseCounterController
             ShiftKitchenObject(_kitchenObjectContainer, kitchenObjectContainer);
             return;
         }
+
+        if(_kitchenObjectContainer.CanContain(kitchenObjectContainer.GetKitchenObject()))
+        {
+            TakeKitchenObject(kitchenObjectContainer);
+            return;
+        }
+
+        if (kitchenObjectContainer.CanContain(_kitchenObjectContainer.GetKitchenObject()))
+        {
+            TakeKitchenObject(_kitchenObjectContainer);
+            return;
+        }
     }
 
     private void ShiftKitchenObject(IKitchenObjectContainer from, IKitchenObjectContainer to)
     {
         to.SetKitchenObject(from.GetKitchenObject());
+        from.ClearKitchenObject();
+    }
+
+    private void TakeKitchenObject(IKitchenObjectContainer from)
+    {
+        from.GetKitchenObject().GetTransform().GetComponent<IObjectPool>().ReturnToPool();
         from.ClearKitchenObject();
     }
 }

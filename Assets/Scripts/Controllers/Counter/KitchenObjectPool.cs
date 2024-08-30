@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KitchenObjectPool : IPool<KitchenObjectController>
+public class KitchenObjectPool : IPool
 {
-    private List<IObjectPool<KitchenObjectController>> _objectList;
-    private int _currentSize => _objectList.Count;
+    public List<IObjectPool> ObjectList { get; private set; }
+    private int _currentSize => ObjectList.Count;
     private int _poolSize;
     private Transform _poolTransform;
 
@@ -12,26 +13,26 @@ public class KitchenObjectPool : IPool<KitchenObjectController>
     {
         _poolSize = size;
 
-        _objectList = new List<IObjectPool<KitchenObjectController>>();
+        ObjectList = new List<IObjectPool>();
         _poolTransform = transform;
     }
 
-    public void AddToPool(IObjectPool<KitchenObjectController> objectPool)
+    public void AddToPool(IObjectPool objectPool)
     {
         if (_currentSize >= _poolSize) return;
 
         objectPool.OnReturnToPool += () =>
         {
-            objectPool.GetObject().SetParent(_poolTransform);
+            objectPool.GetTransform().SetParent(_poolTransform);
         };
 
-        _objectList.Add(objectPool);
+        ObjectList.Add(objectPool);
         objectPool.ReturnToPool();
     }
 
-    public IObjectPool<KitchenObjectController> GetObjectPool()
+    public IObjectPool GetObjectPool(Func<IObjectPool, bool> predicate)
     {
-        IObjectPool<KitchenObjectController> objectPool = _objectList.Find(obj => !obj.IsActivated);
+        IObjectPool objectPool = ObjectList.Find(obj => predicate(obj));
         if (objectPool == null) return null;
         objectPool.Reset();
 

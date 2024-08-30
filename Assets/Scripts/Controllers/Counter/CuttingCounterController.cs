@@ -1,39 +1,38 @@
+using System;
 using UnityEngine;
 
-public class CuttingCounterController : ClearCounterController
+public class CuttingCounterController : ClearCounterController, IProgressTracker
 {
-    #region UnityEditor
-    [SerializeField] private ProgressBarController _progressBar;
-    #endregion
-
     private const string CUT = "Cut";
     
     private ISlicableKitchenObject _sliceObject;
     private Animator _animator;
+
+    public float ProgressValue { get; private set; }
+
+    public event Action<float> OnProgressChange;
 
     protected override void Start()
     {
         base.Start();
         _animator = GetComponentInChildren<Animator>();
 
-        _progressBar.ShowIf(false);
-
         _kitchenObjectContainer.OnSetKitchenObject += (kitchenObject) =>
         {
-            _progressBar.ShowIf(kitchenObject != null);
+            SetProgress(0);
 
             if (kitchenObject == null) return;
-            if (_sliceObject == null && !kitchenObject.TryGetComponent(out _sliceObject)) return;
+            if (_sliceObject == null && !kitchenObject.GetTransform().TryGetComponent(out _sliceObject)) return;
 
-            _progressBar.SetProgressValue(_sliceObject.GetSliceProgress());
+            SetProgress(_sliceObject.GetSliceProgress());
         };
     }
 
-    protected override bool CanInteractWith(KitchenObjectController kitchenObject)
+    protected override bool CanInteractWith(IKitchenObject kitchenObject)
     {
         if (kitchenObject == null) return true;
 
-        return kitchenObject.TryGetComponent(out _sliceObject);
+        return kitchenObject.GetTransform().TryGetComponent(out _sliceObject);
     }
 
     public override void AlternateInteract(IKitchenObjectContainer kitchenObjectContainer)
@@ -43,6 +42,12 @@ public class CuttingCounterController : ClearCounterController
 
         _animator.SetTrigger(CUT);
         _sliceObject.Slice();
-        _progressBar.SetProgressValue(_sliceObject.GetSliceProgress());
+        SetProgress(_sliceObject.GetSliceProgress());
+    }
+
+    private void SetProgress(float value)
+    {
+        ProgressValue = value;
+        OnProgressChange?.Invoke(value);
     }
 }

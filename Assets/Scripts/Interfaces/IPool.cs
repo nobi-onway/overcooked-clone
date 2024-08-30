@@ -1,5 +1,9 @@
-public interface IPool<T>
+using System.Collections.Generic;
+using System;
+
+public interface IPool
 {
-    public void AddToPool(IObjectPool<T> objectPool);
-    public IObjectPool<T> GetObjectPool();
+    public void AddToPool(IObjectPool objectPool);
+    public IObjectPool GetObjectPool(Func<IObjectPool, bool> predicate);
+    public List<IObjectPool> ObjectList { get; }
 }

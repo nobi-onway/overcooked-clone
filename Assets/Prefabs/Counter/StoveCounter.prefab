@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7202136751013184912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5352,7 +5352,8 @@ MonoBehaviour:
   - {fileID: 6382308457159539714}
   - {fileID: 459434602345791175}
   - {fileID: 7675005058440344025}
-  _progressBar: {fileID: 547659542460413021}
+  _stoveOnVisual: {fileID: 6752490783824484929}
+  _sizzlingParticle: {fileID: 1583823631015726530}
 --- !u!1 &5655825503227726130
 GameObject:
   m_ObjectHideFlags: 0
