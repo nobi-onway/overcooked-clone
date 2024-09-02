@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IContainableObject
 {
     public bool TryContainObject(IKitchenObject kitchenObject);
+    public List<KitchenObjectSettings> GetContainedKitchenObject();
 }

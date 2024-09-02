@@ -22,7 +22,7 @@ public class IngredientsIndicator : MonoBehaviour
             if (setting == null) { ClearIngredientList(); return; }
 
             IngredientIcon ingredientIconClone = Instantiate(_ingredientPrefab, _ingredientHolder.transform);
-            ingredientIconClone.Init(setting.sprite);
+            ingredientIconClone.Init(setting.processedSprite);
 
             _ingredientList.Add(ingredientIconClone);
             _canvasGroup.alpha = 1;

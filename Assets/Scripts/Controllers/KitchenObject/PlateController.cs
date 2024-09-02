@@ -54,4 +54,9 @@ public class PlateController : KitchenObjectController, IContainableObject, ICha
         VisualIndex = visualIndex;
         OnVisualChange?.Invoke(visualIndex);
     }
+
+    public List<KitchenObjectSettings> GetContainedKitchenObject()
+    {
+        return _currentContainedKitchenObjectList;
+    }
 }
